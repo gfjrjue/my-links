@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>我的动态更新</title>
     <style>
+        /* 全局背景：深墨绿色 */
         body {
             margin: 0;
             padding: 0;
@@ -12,138 +13,80 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* 深色渐变，更高级 */
-            font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+            /* 墨绿色渐变背景 */
+            background: linear-gradient(135deg, #1a2a22 0%, #2d4a3e 100%);
+            font-family: -apple-system, "PingFang SC", sans-serif;
         }
 
+        /* 卡片样式 */
         .card {
-            background: white;
-            padding: 40px 25px;
-            border-radius: 28px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            /* 半透明白色背景（磨砂效果） */
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            
+            /* 关键修改：限制宽度，适配电脑观看 */
             width: 90%;
-            max-width: 500px; /* 稍微调宽了一点，容纳更多字 */
-            box-sizing: border-box; /* 防止边距撑破屏幕 */
+            max-width: 480px; 
+            
+            box-sizing: border-box;
             text-align: center;
+            transition: all 0.3s ease;
         }
 
-        /* 核心修改：让长文字自动换行并根据长度调整大小 */
-        .text-content {
-            color: #2d3436;
-            font-size: 1.25rem; /* 稍微缩小基础字号，防止太撑 */
-            line-height: 1.8;
-            margin: 0;
-            font-weight: 500;
-            word-wrap: break-word; /* 强制超长连续字符换行 */
-            white-space: pre-wrap; /* 保留你代码里的手动换行 */
-            text-align: justify; /* 文字两端对齐，长句更美观 */
-        }
-
-        .icon {
-            font-size: 2.5rem;
+        /* 顶部装饰小图标 */
+        .leaf-icon {
+            font-size: 2.2rem;
             margin-bottom: 20px;
             display: block;
         }
 
-        /* 更加醒目的更新时间样式 */
-        .time-tag {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 6px 15px;
-            background-color: #ff7675; /* 醒目的红色系 */
-            color: white;
-            font-size: 0.9rem;
-            font-weight: bold;
-            border-radius: 50px;
-            box-shadow: 0 4px 10px rgba(255, 118, 117, 0.3);
-        }
-    </style>
-</head>
-<body>
-
-    <div class="card">
-        <span class="icon">📢</span>
-        
-        <div class="text-content">
-            <!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的动态更新</title>
-    <style>
-        body {
+        /* 文字内容区 */
+        .text-content {
+            color: #2c3e50;
+            font-size: 1.15rem; /* 字号微调，适合长句 */
+            line-height: 1.8;
             margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
+            font-weight: 500;
+            word-wrap: break-word;
+            white-space: pre-wrap; /* 保留换行 */
+            text-align: left; /* 长文建议左对齐或两端对齐 */
+        }
+
+        /* 醒目的时间标签 */
+        .time-badge {
+            display: inline-flex;
             align-items: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* 深色渐变，更高级 */
-            font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+            margin-top: 35px;
+            padding: 8px 20px;
+            /* 使用墨绿色呼应背景 */
+            background-color: #2d4a3e; 
+            color: #e0eadd;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 12px;
+            letter-spacing: 1px;
         }
 
-        .card {
-            background: white;
-            padding: 40px 25px;
-            border-radius: 28px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-            width: 90%;
-            max-width: 500px; /* 稍微调宽了一点，容纳更多字 */
-            box-sizing: border-box; /* 防止边距撑破屏幕 */
-            text-align: center;
-        }
-
-        /* 核心修改：让长文字自动换行并根据长度调整大小 */
-        .text-content {
-            color: #2d3436;
-            font-size: 1.25rem; /* 稍微缩小基础字号，防止太撑 */
-            line-height: 1.8;
-            margin: 0;
-            font-weight: 500;
-            word-wrap: break-word; /* 强制超长连续字符换行 */
-            white-space: pre-wrap; /* 保留你代码里的手动换行 */
-            text-align: justify; /* 文字两端对齐，长句更美观 */
-        }
-
-        .icon {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        /* 更加醒目的更新时间样式 */
-        .time-tag {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 6px 15px;
-            background-color: #ff7675; /* 醒目的红色系 */
-            color: white;
-            font-size: 0.9rem;
-            font-weight: bold;
-            border-radius: 50px;
-            box-shadow: 0 4px 10px rgba(255, 118, 117, 0.3);
+        /* 鼠标悬停在卡片上的微动效果 */
+        .card:hover {
+            transform: translateY(-8px);
         }
     </style>
 </head>
 <body>
 
     <div class="card">
-        <span class="icon">📢</span>
+        <span class="leaf-icon">🌿</span>
         
         <div class="text-content">
-            hysteria2://r0sZ1V8bmIfeYXln@47.79.87.5:32618?insecure=1&sni=&alpn=h3&fp=&mport=&os=#sevenhy2
-        </div>
-        <div class="time-tag">
-            📅 最后更新：2026年1月16日
-        </div>
-    </div>
+            在这里输入你想说的话。
 
-</body>
-</html>
+            由于限制了 480px 的最大宽度，这段文字即使再长，在电脑屏幕上也会保持在一个紧凑、舒适的阅读区域内，不会横跨整个屏幕导致阅读疲劳。
         </div>
-        <div class="time-tag">
-            📅 最后更新：2026年1月16日
+        <div class="time-badge">
+            LAST UPDATED : 2026-01-16
         </div>
     </div>
 
