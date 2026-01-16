@@ -3,73 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的私人链接库</title>
+    <title>我的动态</title>
     <style>
-        body { font-family: -apple-system, sans-serif; background: #f0f2f5; display: flex; justify-content: center; padding: 20px; }
-        .container { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
-        h2 { text-align: center; color: #333; margin-bottom: 20px; }
-        .input-group { margin-bottom: 15px; }
-        input { width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
-        button { width: 100%; padding: 10px; background: #007AFF; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
-        button:hover { background: #0056b3; }
-        .link-list { margin-top: 20px; border-top: 1px solid #eee; padding-top: 10px; }
-        .link-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #fafafa; }
-        .link-item a { color: #007AFF; text-decoration: none; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 200px; }
-        .del-btn { background: #ff3b30; width: auto; padding: 5px 10px; font-size: 12px; }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5; /* 浅灰色背景 */
+            font-family: sans-serif;
+        }
+        .content-box {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 80%;
+            text-align: center;
+        }
+        h1 {
+            font-size: 1.5rem;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>🔗 我的链接库</h2>
-    
-    <div class="input-group">
-        <input type="text" id="linkName" placeholder="备注（如：我的微博）">
-        <input type="text" id="linkUrl" placeholder="粘贴链接 https://...">
-        <button onclick="addLink()">保存到本地</button>
-    </div>
-
-    <div class="link-list" id="linkList">
+    <div class="content-box">
+        <h1>hysteria2://r0sZ1V8bmIfeYXln@47.79.87.5:32618?insecure=1&sni=&alpn=h3&fp=&mport=&os=#sevenhy2。</h1>
         </div>
-</div>
-
-<script>
-    // 初始化加载
-    window.onload = displayLinks;
-
-    function addLink() {
-        const name = document.getElementById('linkName').value;
-        const url = document.getElementById('linkUrl').value;
-        if (!name || !url) return alert("hysteria2://r0sZ1V8bmIfeYXln@47.79.87.5:32618?insecure=1&sni=&alpn=h3&fp=&mport=&os=#sevenhy2");
-
-        const links = JSON.parse(localStorage.getItem('myLinks') || '[]');
-        links.push({ name, url });
-        localStorage.setItem('myLinks', JSON.stringify(links));
-        
-        document.getElementById('linkName').value = '';
-        document.getElementById('linkUrl').value = '';
-        displayLinks();
-    }
-
-    function displayLinks() {
-        const links = JSON.parse(localStorage.getItem('myLinks') || '[]');
-        const list = document.getElementById('linkList');
-        list.innerHTML = links.map((link, index) => `
-            <div class="link-item">
-                <a href="${link.url}" target="_blank">${link.name}</a>
-                <button class="del-btn" onclick="deleteLink(${index})">删除</button>
-            </div>
-        `).join('');
-    }
-
-    function deleteLink(index) {
-        const links = JSON.parse(localStorage.getItem('myLinks') || '[]');
-        links.splice(index, 1);
-        localStorage.setItem('myLinks', JSON.stringify(links));
-        displayLinks();
-    }
-</script>
 
 </body>
 </html>
-
