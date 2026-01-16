@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的个人动态</title>
+    <title>我的动态更新</title>
     <style>
-        /* 基础样式设置 */
         body {
             margin: 0;
             padding: 0;
@@ -13,60 +12,139 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            /* 现代渐变背景 */
-            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
-            font-family: -apple-system, "Helvetica Neue", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* 深色渐变，更高级 */
+            font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
         }
 
-        /* 卡片容器样式 */
         .card {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 40px 30px;
-            border-radius: 24px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            background: white;
+            padding: 40px 25px;
+            border-radius: 28px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            width: 90%;
+            max-width: 500px; /* 稍微调宽了一点，容纳更多字 */
+            box-sizing: border-box; /* 防止边距撑破屏幕 */
             text-align: center;
-            max-width: 400px;
-            width: 85%;
-            /* 简单的浮动动画 */
-            transition: transform 0.3s ease;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        /* 标题（你想展示的话） */
-        h1 {
-            color: #333;
-            font-size: 1.4rem;
-            line-height: 1.6;
+        /* 核心修改：让长文字自动换行并根据长度调整大小 */
+        .text-content {
+            color: #2d3436;
+            font-size: 1.25rem; /* 稍微缩小基础字号，防止太撑 */
+            line-height: 1.8;
             margin: 0;
-            font-weight: 600;
+            font-weight: 500;
+            word-wrap: break-word; /* 强制超长连续字符换行 */
+            white-space: pre-wrap; /* 保留你代码里的手动换行 */
+            text-align: justify; /* 文字两端对齐，长句更美观 */
         }
 
-        /* 装饰用的小图标 */
         .icon {
-            font-size: 2rem;
-            margin-bottom: 15px;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
             display: block;
         }
 
-        /* 更新时间提示 */
-        .time {
-            margin-top: 20px;
-            color: #999;
-            font-size: 0.8rem;
-            letter-spacing: 0.5px;
+        /* 更加醒目的更新时间样式 */
+        .time-tag {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 6px 15px;
+            background-color: #ff7675; /* 醒目的红色系 */
+            color: white;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border-radius: 50px;
+            box-shadow: 0 4px 10px rgba(255, 118, 117, 0.3);
         }
     </style>
 </head>
 <body>
 
     <div class="card">
-        <span class="icon">✨</span>
+        <span class="icon">📢</span>
         
-        <h1>“ hysteria2://r0sZ1V8bmIfeYXln@47.79.87.5:32618?insecure=1&sni=&alpn=h3&fp=&mport=&os=#sevenhy2。 ”</h1>
-        <div class="time" id="update-time">最后更新：2026年1月16日</div>
+        <div class="text-content">
+            <!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的动态更新</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* 深色渐变，更高级 */
+            font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+        }
+
+        .card {
+            background: white;
+            padding: 40px 25px;
+            border-radius: 28px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            width: 90%;
+            max-width: 500px; /* 稍微调宽了一点，容纳更多字 */
+            box-sizing: border-box; /* 防止边距撑破屏幕 */
+            text-align: center;
+        }
+
+        /* 核心修改：让长文字自动换行并根据长度调整大小 */
+        .text-content {
+            color: #2d3436;
+            font-size: 1.25rem; /* 稍微缩小基础字号，防止太撑 */
+            line-height: 1.8;
+            margin: 0;
+            font-weight: 500;
+            word-wrap: break-word; /* 强制超长连续字符换行 */
+            white-space: pre-wrap; /* 保留你代码里的手动换行 */
+            text-align: justify; /* 文字两端对齐，长句更美观 */
+        }
+
+        .icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        /* 更加醒目的更新时间样式 */
+        .time-tag {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 6px 15px;
+            background-color: #ff7675; /* 醒目的红色系 */
+            color: white;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border-radius: 50px;
+            box-shadow: 0 4px 10px rgba(255, 118, 117, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <span class="icon">📢</span>
+        
+        <div class="text-content">
+            hysteria2://r0sZ1V8bmIfeYXln@47.79.87.5:32618?insecure=1&sni=&alpn=h3&fp=&mport=&os=#sevenhy2
+        </div>
+        <div class="time-tag">
+            📅 最后更新：2026年1月16日
+        </div>
+    </div>
+
+</body>
+</html>
+        </div>
+        <div class="time-tag">
+            📅 最后更新：2026年1月16日
+        </div>
     </div>
 
 </body>
