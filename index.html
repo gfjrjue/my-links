@@ -59,9 +59,18 @@
             border-left: 4px solid var(--primary-color); text-align: left; position: relative;
         }
 
-        .text-content { color: var(--text-main); font-size: 1.05rem; line-height: 1.8; white-space: pre-wrap; margin: 0; }
+        /* 重点修改：修复文字超出 */
+        .text-content { 
+            color: var(--text-main); 
+            font-size: 1.05rem; 
+            line-height: 1.8; 
+            white-space: pre-wrap; /* 保留 content.txt 中的换行 */
+            word-wrap: break-word; /* 允许在长单词内换行 */
+            word-break: break-all; /* 强制在单词内断开 */
+            overflow-wrap: break-word; /* 现代浏览器兼容换行 */
+            margin: 0; 
+        }
 
-        /* 一键复制按钮样式 */
         .copy-btn {
             margin-top: 15px; background: transparent; border: 1px solid var(--primary-color);
             color: var(--primary-color); padding: 5px 12px; border-radius: 8px;
@@ -98,7 +107,6 @@
     </div>
 
     <script>
-        // 1. 生成气泡
         const container = document.getElementById('bubble-container');
         for (let i = 0; i < 12; i++) {
             const bubble = document.createElement('li');
@@ -111,18 +119,16 @@
             container.appendChild(bubble);
         }
 
-        // 2. 读取 content.txt 的内容
         async function loadContent() {
             try {
-                // 加上时间戳防止浏览器缓存不更新内容
                 const response = await fetch('content.txt?t=' + new Date().getTime());
                 const text = await response.text();
-                document.getElementById('content').innerText = text;
-            } catch (e) { document.getElementById('content').innerText = '读取内容失败，请确保 content.txt 存在。'; }
+                // 自动清理文字前后多余的空格，让排版更紧凑
+                document.getElementById('content').innerText = text.trim();
+            } catch (e) { document.getElementById('content').innerText = '读取失败'; }
         }
         loadContent();
 
-        // 3. 一键复制功能
         function copyText() {
             const text = document.getElementById('content').innerText;
             navigator.clipboard.writeText(text).then(() => {
@@ -133,7 +139,6 @@
             });
         }
 
-        // 4. 音乐与主题控制
         function toggleMusic() {
             const audio = document.getElementById('bgm');
             const btn = document.getElementById('music-btn');
@@ -153,10 +158,10 @@
             }
         }
 
-        // 5. 配置信息 (获取 content.txt 的修改时间)
+        // --- 配置信息 ---
         const username = 'gfjrjue'; 
         const repo = 'my-links';
-        const path = 'content.txt'; // 我们现在跟踪文本文件的修改时间
+        const path = 'content.txt';
 
         async function getLastUpdate() {
             try {
