@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的个人主页</title>
+    <title>我的个人动态</title>
     <style>
         :root {
-            --primary-color: #2d4a3e; /* 墨绿色 */
+            --primary-color: #2d4a3e; /* 墨绿色主题 */
             --bg-gradient: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%);
         }
 
@@ -14,10 +14,10 @@
             margin: 0; padding: 0; display: flex; justify-content: center; align-items: center;
             min-height: 100vh; background: var(--bg-gradient);
             font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
-            overflow: hidden; /* 隐藏气泡溢出 */
+            overflow: hidden; 
         }
 
-        /* 动态背景气泡 */
+        /* 背景气泡动画 */
         .bubbles { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
         .bubble {
             position: absolute; list-style: none; display: block;
@@ -30,21 +30,21 @@
             100% { transform: translateY(-1200px) rotate(720deg); opacity: 0; }
         }
 
-        /* 磨砂主卡片 */
+        /* 磨砂玻璃卡片 */
         .card {
             position: relative; z-index: 10;
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.75);
             backdrop-filter: blur(20px);
             padding: 40px 30px; border-radius: 32px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.08);
             width: 88%; max-width: 480px;
             border: 1px solid rgba(255, 255, 255, 0.4);
             text-align: center;
-            animation: slideIn 1s ease-out;
+            animation: slideIn 1.2s ease-out;
         }
 
         @keyframes slideIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -54,10 +54,10 @@
             color: var(--primary-color);
             margin: 0 0 20px 0;
             font-weight: 700;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
         }
 
-        /* 文字包裹区域 */
+        /* 文字区域 */
         .text-wrapper {
             background: rgba(255, 255, 255, 0.4);
             padding: 25px; border-radius: 20px;
@@ -67,42 +67,54 @@
 
         .text-content {
             color: #34495e;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             line-height: 1.8;
             word-wrap: break-word;
             white-space: pre-wrap;
-        }
-
-        .text-content::first-letter {
-            font-size: 1.7rem; font-weight: bold; color: var(--primary-color);
-            float: left; margin-right: 6px; line-height: 1;
+            margin: 0;
         }
 
         /* 时间标签 */
         .time-badge {
             display: inline-block; margin-top: 30px;
-            padding: 7px 18px; background: var(--primary-color);
+            padding: 8px 18px; background: var(--primary-color);
             color: #ffffff; font-size: 0.75rem;
             border-radius: 12px; font-weight: 500;
+            box-shadow: 0 4px 10px rgba(45, 74, 62, 0.2);
         }
+
+        /* 音乐按钮样式 */
+        #music-btn {
+            position: fixed; bottom: 25px; right: 25px;
+            width: 45px; height: 45px; border-radius: 50%;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0,0,0,0.1);
+            cursor: pointer; font-size: 20px;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 100; transition: all 0.3s;
+        }
+        #music-btn:hover { transform: scale(1.1); background: #fff; }
     </style>
 </head>
 <body>
 
     <ul class="bubbles" id="bubble-container"></ul>
 
+    <audio id="bgm" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
+    <button id="music-btn" onclick="toggleMusic()">🎵</button>
+
     <div class="card">
-        <h1 class="title">今日碎碎念</h1>
+        <h1 class="title">今日动态</h1>
         
         <div class="text-wrapper">
-            <div class="text-content">这里输入你那段长长的话。现在的文字排版非常优雅，首字会自动放大，左侧有装饰线，配合背后的漂浮气泡，整个页面非常有灵气。</div>
+            <div class="text-content">你好！这是一段已经统一了字号的正文内容。背景采用了清新的气泡设计，右下角还有一个音乐播放开关。你可以随时修改这段话，底部的日期会根据你的修改操作自动刷新。</div>
         </div>
 
-        <div class="time-badge" id="last-update">正在同步更新时间...</div>
+        <div class="time-badge" id="last-update">同步中...</div>
     </div>
 
     <script>
-        // 生成随机气泡
+        // 1. 生成随机气泡脚本
         const container = document.getElementById('bubble-container');
         for (let i = 0; i < 12; i++) {
             const bubble = document.createElement('li');
@@ -115,7 +127,21 @@
             container.appendChild(bubble);
         }
 
-        // --- 核心配置：请务必修改这里 ---
+        // 2. 音乐播放逻辑
+        function toggleMusic() {
+            const audio = document.getElementById('bgm');
+            const btn = document.getElementById('music-btn');
+            if (audio.paused) {
+                audio.play();
+                btn.innerText = '⏸';
+            } else {
+                audio.pause();
+                btn.innerText = '🎵';
+            }
+        }
+
+        // 3. --- 核心配置：请务必修改这里 ---
+        // 把引号里的中文换成你自己的 GitHub 信息
         const username = 'gfjrjue'; 
         const repo = 'my-links';
         const path = 'index.html';
@@ -126,9 +152,9 @@
                 const data = await response.json();
                 if (data && data[0]) {
                     const date = new Date(data[0].commit.committer.date);
-                    document.getElementById('last-update').textContent = '最后更新：' + date.toLocaleString();
+                    document.getElementById('last-update').textContent = '最后修改：' + date.toLocaleString();
                 }
-            } catch (e) { document.getElementById('last-update').textContent = '时间获取失败'; }
+            } catch (e) { document.getElementById('last-update').textContent = '更新时间暂不可用'; }
         }
         getLastUpdate();
     </script>
