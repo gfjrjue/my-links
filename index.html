@@ -6,94 +6,91 @@
     <title>我的个人动态</title>
     <style>
         :root {
-            --primary-color: #2d4a3e; /* 墨绿色主题 */
+            /* 亮色模式变量 */
+            --primary-color: #2d4a3e;
             --bg-gradient: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%);
+            --card-bg: rgba(255, 255, 255, 0.75);
+            --text-main: #34495e;
+            --text-title: #2d4a3e;
+        }
+
+        /* 黑夜模式变量 */
+        [data-theme="dark"] {
+            --primary-color: #80cbc4;
+            --bg-gradient: linear-gradient(135deg, #0a0f0d 0%, #1a2a22 100%);
+            --card-bg: rgba(30, 40, 35, 0.85);
+            --text-main: #cfd8dc;
+            --text-title: #80cbc4;
         }
 
         body {
             margin: 0; padding: 0; display: flex; justify-content: center; align-items: center;
             min-height: 100vh; background: var(--bg-gradient);
             font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
-            overflow: hidden; 
+            overflow: hidden; transition: background 0.5s ease;
         }
 
-        /* 背景气泡动画 */
+        /* 背景气泡 */
         .bubbles { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
         .bubble {
             position: absolute; list-style: none; display: block;
-            background-color: rgba(255, 255, 255, 0.4);
+            background-color: rgba(255, 255, 255, 0.2);
             bottom: -160px; border-radius: 50%;
             animation: bubble-up 20s linear infinite;
         }
         @keyframes bubble-up {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.5; }
             100% { transform: translateY(-1200px) rotate(720deg); opacity: 0; }
         }
 
         /* 磨砂玻璃卡片 */
         .card {
             position: relative; z-index: 10;
-            background: rgba(255, 255, 255, 0.75);
+            background: var(--card-bg);
             backdrop-filter: blur(20px);
             padding: 40px 30px; border-radius: 32px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
             width: 88%; max-width: 480px;
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             text-align: center;
-            animation: slideIn 1.2s ease-out;
+            transition: all 0.5s ease;
         }
 
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* 标题样式 */
         .title {
-            font-size: 1.6rem;
-            color: var(--primary-color);
-            margin: 0 0 20px 0;
-            font-weight: 700;
-            letter-spacing: 2px;
+            font-size: 1.6rem; color: var(--text-title);
+            margin: 0 0 20px 0; font-weight: 700; letter-spacing: 2px;
         }
 
-        /* 文字区域 */
         .text-wrapper {
-            background: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.1);
             padding: 25px; border-radius: 20px;
             border-left: 4px solid var(--primary-color);
             text-align: left;
         }
 
         .text-content {
-            color: #34495e;
-            font-size: 1.05rem;
-            line-height: 1.8;
-            word-wrap: break-word;
-            white-space: pre-wrap;
-            margin: 0;
+            color: var(--text-main); font-size: 1.05rem;
+            line-height: 1.8; word-wrap: break-word; white-space: pre-wrap;
         }
 
-        /* 时间标签 */
         .time-badge {
             display: inline-block; margin-top: 30px;
             padding: 8px 18px; background: var(--primary-color);
-            color: #ffffff; font-size: 0.75rem;
-            border-radius: 12px; font-weight: 500;
-            box-shadow: 0 4px 10px rgba(45, 74, 62, 0.2);
+            color: #ffffff; font-size: 0.75rem; border-radius: 12px;
         }
 
-        /* 音乐按钮样式 */
-        #music-btn {
-            position: fixed; bottom: 25px; right: 25px;
-            width: 45px; height: 45px; border-radius: 50%;
-            background: rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(0,0,0,0.1);
-            cursor: pointer; font-size: 20px;
-            display: flex; align-items: center; justify-content: center;
-            z-index: 100; transition: all 0.3s;
+        /* 控制按钮通用样式 */
+        .control-btn {
+            position: fixed; right: 25px; width: 45px; height: 45px;
+            border-radius: 50%; background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            cursor: pointer; font-size: 20px; display: flex;
+            align-items: center; justify-content: center;
+            z-index: 100; transition: all 0.3s; color: var(--text-title);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-        #music-btn:hover { transform: scale(1.1); background: #fff; }
+        #music-btn { bottom: 25px; }
+        #theme-btn { bottom: 80px; } /* 放在播放按钮上方 */
     </style>
 </head>
 <body>
@@ -101,20 +98,20 @@
     <ul class="bubbles" id="bubble-container"></ul>
 
     <audio id="bgm" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
-    <button id="music-btn" onclick="toggleMusic()">🎵</button>
+    <button id="music-btn" class="control-btn" onclick="toggleMusic()">🎵</button>
+
+    <button id="theme-btn" class="control-btn" onclick="toggleTheme()">☀️</button>
 
     <div class="card">
-        <h1 class="title">今日动态</h1>
-        
+        <h1 class="title">账号更新</h1>
         <div class="text-wrapper">
-            <div class="text-content">你好！这是一段已经统一了字号的正文内容。背景采用了清新的气泡设计，右下角还有一个音乐播放开关。你可以随时修改这段话，底部的日期会根据你的修改操作自动刷新。</div>
+            <div class="text-content">你好！现在的代码包含了所有你想要的功能：黑夜模式一键切换、背景音乐开关、以及自动同步的时间。点击右下角的太阳图标，看看奇迹发生吧！</div>
         </div>
-
         <div class="time-badge" id="last-update">同步中...</div>
     </div>
 
     <script>
-        // 1. 生成随机气泡脚本
+        // 1. 背景气泡
         const container = document.getElementById('bubble-container');
         for (let i = 0; i < 12; i++) {
             const bubble = document.createElement('li');
@@ -127,21 +124,28 @@
             container.appendChild(bubble);
         }
 
-        // 2. 音乐播放逻辑
+        // 2. 音乐控制
         function toggleMusic() {
             const audio = document.getElementById('bgm');
             const btn = document.getElementById('music-btn');
-            if (audio.paused) {
-                audio.play();
-                btn.innerText = '⏸';
+            if (audio.paused) { audio.play(); btn.innerText = '⏸'; }
+            else { audio.pause(); btn.innerText = '🎵'; }
+        }
+
+        // 3. 黑夜模式逻辑
+        function toggleTheme() {
+            const body = document.body;
+            const btn = document.getElementById('theme-btn');
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                btn.innerText = '☀️';
             } else {
-                audio.pause();
-                btn.innerText = '🎵';
+                body.setAttribute('data-theme', 'dark');
+                btn.innerText = '🌙';
             }
         }
 
-        // 3. --- 核心配置：请务必修改这里 ---
-        // 把引号里的中文换成你自己的 GitHub 信息
+        // 4. --- 核心配置：请务必修改这里 ---
         const username = 'gfjrjue'; 
         const repo = 'my-links';
         const path = 'index.html';
@@ -154,7 +158,7 @@
                     const date = new Date(data[0].commit.committer.date);
                     document.getElementById('last-update').textContent = '最后修改：' + date.toLocaleString();
                 }
-            } catch (e) { document.getElementById('last-update').textContent = '更新时间暂不可用'; }
+            } catch (e) { document.getElementById('last-update').textContent = '时间同步失败'; }
         }
         getLastUpdate();
     </script>
