@@ -6,7 +6,6 @@
     <title>我的个人动态</title>
     <style>
         :root {
-            /* 亮色模式变量 */
             --primary-color: #2d4a3e;
             --bg-gradient: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%);
             --card-bg: rgba(255, 255, 255, 0.75);
@@ -14,7 +13,6 @@
             --text-title: #2d4a3e;
         }
 
-        /* 黑夜模式变量 */
         [data-theme="dark"] {
             --primary-color: #80cbc4;
             --bg-gradient: linear-gradient(135deg, #0a0f0d 0%, #1a2a22 100%);
@@ -45,73 +43,62 @@
 
         /* 磨砂玻璃卡片 */
         .card {
-            position: relative; z-index: 10;
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            padding: 40px 30px; border-radius: 32px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-            width: 88%; max-width: 480px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            text-align: center;
-            transition: all 0.5s ease;
+            position: relative; z-index: 10; background: var(--card-bg);
+            backdrop-filter: blur(20px); padding: 40px 30px; border-radius: 32px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15); width: 88%; max-width: 480px;
+            border: 1px solid rgba(255, 255, 255, 0.2); text-align: center;
+            animation: slideIn 1.2s ease-out;
         }
 
-        .title {
-            font-size: 1.6rem; color: var(--text-title);
-            margin: 0 0 20px 0; font-weight: 700; letter-spacing: 2px;
-        }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        .title { font-size: 1.6rem; color: var(--text-title); margin-bottom: 20px; font-weight: 700; letter-spacing: 2px; }
 
         .text-wrapper {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 25px; border-radius: 20px;
-            border-left: 4px solid var(--primary-color);
-            text-align: left;
+            background: rgba(255, 255, 255, 0.1); padding: 25px; border-radius: 20px;
+            border-left: 4px solid var(--primary-color); text-align: left; position: relative;
         }
 
-        .text-content {
-            color: var(--text-main); font-size: 1.05rem;
-            line-height: 1.8; word-wrap: break-word; white-space: pre-wrap;
-        }
+        .text-content { color: var(--text-main); font-size: 1.05rem; line-height: 1.8; white-space: pre-wrap; margin: 0; }
 
-        .time-badge {
-            display: inline-block; margin-top: 30px;
-            padding: 8px 18px; background: var(--primary-color);
-            color: #ffffff; font-size: 0.75rem; border-radius: 12px;
+        /* 一键复制按钮样式 */
+        .copy-btn {
+            margin-top: 15px; background: transparent; border: 1px solid var(--primary-color);
+            color: var(--primary-color); padding: 5px 12px; border-radius: 8px;
+            font-size: 0.8rem; cursor: pointer; transition: all 0.3s;
         }
+        .copy-btn:hover { background: var(--primary-color); color: #fff; }
 
-        /* 控制按钮通用样式 */
+        .time-badge { display: inline-block; margin-top: 25px; padding: 8px 18px; background: var(--primary-color); color: #ffffff; font-size: 0.75rem; border-radius: 12px; }
+
         .control-btn {
-            position: fixed; right: 25px; width: 45px; height: 45px;
-            border-radius: 50%; background: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            cursor: pointer; font-size: 20px; display: flex;
-            align-items: center; justify-content: center;
-            z-index: 100; transition: all 0.3s; color: var(--text-title);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            position: fixed; right: 25px; width: 45px; height: 45px; border-radius: 50%;
+            background: var(--card-bg); border: 1px solid rgba(255, 255, 255, 0.3);
+            cursor: pointer; font-size: 20px; display: flex; align-items: center; justify-content: center;
+            z-index: 100; transition: all 0.3s; color: var(--text-title); box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
         #music-btn { bottom: 25px; }
-        #theme-btn { bottom: 80px; } /* 放在播放按钮上方 */
+        #theme-btn { bottom: 80px; }
     </style>
 </head>
 <body>
 
     <ul class="bubbles" id="bubble-container"></ul>
-
     <audio id="bgm" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
     <button id="music-btn" class="control-btn" onclick="toggleMusic()">🎵</button>
-
     <button id="theme-btn" class="control-btn" onclick="toggleTheme()">☀️</button>
 
     <div class="card">
         <h1 class="title">账号更新</h1>
         <div class="text-wrapper">
-            <div class="text-content">hysteria2://r0sZ1V8bmIfeYXln@47.79.87.5:32618?insecure=1&sni=&alpn=h3&fp=&mport=&os=#sevenhy2 </div>
+            <div id="content" class="text-content">正在读取内容...</div>
+            <button class="copy-btn" onclick="copyText()">复制内容</button>
         </div>
         <div class="time-badge" id="last-update">同步中...</div>
     </div>
 
     <script>
-        // 1. 背景气泡
+        // 1. 生成气泡
         const container = document.getElementById('bubble-container');
         for (let i = 0; i < 12; i++) {
             const bubble = document.createElement('li');
@@ -124,7 +111,29 @@
             container.appendChild(bubble);
         }
 
-        // 2. 音乐控制
+        // 2. 读取 content.txt 的内容
+        async function loadContent() {
+            try {
+                // 加上时间戳防止浏览器缓存不更新内容
+                const response = await fetch('content.txt?t=' + new Date().getTime());
+                const text = await response.text();
+                document.getElementById('content').innerText = text;
+            } catch (e) { document.getElementById('content').innerText = '读取内容失败，请确保 content.txt 存在。'; }
+        }
+        loadContent();
+
+        // 3. 一键复制功能
+        function copyText() {
+            const text = document.getElementById('content').innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                const originalText = btn.innerText;
+                btn.innerText = '✅ 已复制';
+                setTimeout(() => { btn.innerText = originalText; }, 2000);
+            });
+        }
+
+        // 4. 音乐与主题控制
         function toggleMusic() {
             const audio = document.getElementById('bgm');
             const btn = document.getElementById('music-btn');
@@ -132,7 +141,6 @@
             else { audio.pause(); btn.innerText = '🎵'; }
         }
 
-        // 3. 黑夜模式逻辑
         function toggleTheme() {
             const body = document.body;
             const btn = document.getElementById('theme-btn');
@@ -145,10 +153,10 @@
             }
         }
 
-        // 4. --- 核心配置：请务必修改这里 ---
-        const username = 'gfjrjue'; 
-        const repo = 'my-links';
-        const path = 'index.html';
+        // 5. 配置信息 (获取 content.txt 的修改时间)
+        const username = ' gfjrjue'; 
+        const repo = 'my-links ';
+        const path = 'content.txt'; // 我们现在跟踪文本文件的修改时间
 
         async function getLastUpdate() {
             try {
@@ -156,12 +164,11 @@
                 const data = await response.json();
                 if (data && data[0]) {
                     const date = new Date(data[0].commit.committer.date);
-                    document.getElementById('last-update').textContent = '最后修改：' + date.toLocaleString();
+                    document.getElementById('last-update').textContent = '内容更新于：' + date.toLocaleString();
                 }
-            } catch (e) { document.getElementById('last-update').textContent = '时间同步失败'; }
+            } catch (e) { document.getElementById('last-update').textContent = '同步失败'; }
         }
         getLastUpdate();
     </script>
 </body>
 </html>
-
