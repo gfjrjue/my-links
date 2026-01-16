@@ -6,143 +6,99 @@
     <title>我的动态</title>
     <style>
         :root {
-            --primary-color: #00796b;
-            --bg-gradient: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%);
+            --primary-color: #2d4a3e; /* 墨绿色 */
+            --bg-gradient: linear-gradient(135deg, #1a2a22 0%, #2d4a3e 100%);
         }
 
         body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: var(--bg-gradient);
-            font-family: -apple-system, "PingFang SC", sans-serif;
+            margin: 0; padding: 0; display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; background: var(--bg-gradient);
+            font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
             overflow: hidden;
         }
 
-        /* 动态背景气泡 */
-        .bubbles {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 0;
-        }
-        .bubble {
-            position: absolute;
-            list-style: none;
-            display: block;
-            background-color: rgba(255, 255, 255, 0.5);
-            bottom: -160px;
-            animation: bubble-up 25s linear infinite;
-            border-radius: 50%;
-        }
-        @keyframes bubble-up {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; }
-        }
-
-        /* 卡片设计 */
+        /* 磨砂卡片 */
         .card {
-            position: relative;
-            z-index: 10;
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(15px);
-            padding: 45px 35px;
-            border-radius: 30px;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
-            width: 85%;
-            max-width: 460px;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            animation: fade-in-up 1s ease-out;
+            position: relative; z-index: 10;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            padding: 40px 30px; border-radius: 28px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            width: 85%; max-width: 460px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            text-align: center;
         }
 
-        @keyframes fade-in-up {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            display: inline-block;
-            animation: float 3s ease-in-out infinite;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        /* 文字容器样式升级 */
+        .text-wrapper {
+            background: rgba(255, 255, 255, 0.5); /* 内部浅色背景 */
+            padding: 25px; border-radius: 18px;
+            border-left: 5px solid var(--primary-color); /* 左侧墨绿装饰条 */
+            margin-top: 10px;
         }
 
         .text-content {
-            color: #263238;
-            font-size: 1.15rem;
-            line-height: 1.8;
+            color: #2c3e50;
+            font-size: 1.1rem;
+            line-height: 1.9; /* 增加行间距，阅读更轻松 */
             font-weight: 500;
             text-align: left;
-            opacity: 0;
-            animation: fade-in 1.5s ease-out forwards;
-            animation-delay: 0.5s;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            letter-spacing: 0.5px; /* 字间距微调 */
         }
-        @keyframes fade-in { to { opacity: 1; } }
 
-        .time-badge {
-            display: inline-block;
-            margin-top: 35px;
-            padding: 6px 16px;
-            background: rgba(0, 150, 136, 0.15);
+        /* 首字符放大装饰 */
+        .text-content::first-letter {
+            font-size: 1.8rem;
+            font-weight: bold;
             color: var(--primary-color);
-            font-size: 0.8rem;
-            border-radius: 10px;
-            transition: all 0.3s;
+            float: left;
+            margin-right: 8px;
+            line-height: 1;
+        }
+
+        .icon { font-size: 2.5rem; margin-bottom: 10px; display: inline-block; }
+
+        /* 时间标签升级 */
+        .time-badge {
+            display: inline-block; margin-top: 30px;
+            padding: 8px 18px; background: var(--primary-color);
+            color: #f0f4f2; font-size: 0.75rem;
+            border-radius: 50px; font-family: monospace; /* 英文用等宽字体 */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
     </style>
 </head>
 <body>
 
-    <ul class="bubbles" id="bubble-container"></ul>
-
     <div class="card">
-        <span class="icon">🍃</span>
-        <div class="text-content">
-更新后的账号链接：hysteria2://r0sZ1V8bmIfeYXln@47.79.87.5:32618?insecure=1&sni=&alpn=h3&fp=&mport=&os=#sevenhy2
-            </div>
-        <div class="time-badge" id="last-update">正在获取更新时间...</div>
+        <span class="icon">🌿</span>
+        
+        <div class="text-wrapper">
+            <div class="text-content">在这里输入你的文字内容。现在的排版加入了左侧装饰条和首字放大效果，整体看起来更像是一篇精致的随笔，而不是简单的文本框。</div>
+        </div>
+
+        <div class="time-badge" id="last-update">Syncing...</div>
     </div>
 
     <script>
-        // --- 动态背景逻辑 ---
-        const container = document.getElementById('bubble-container');
-        for (let i = 0; i < 10; i++) {
-            const bubble = document.createElement('li');
-            bubble.className = 'bubble';
-            const size = Math.random() * 60 + 20 + 'px';
-            bubble.style.width = size;
-            bubble.style.height = size;
-            bubble.style.left = Math.random() * 100 + '%';
-            bubble.style.animationDuration = Math.random() * 10 + 15 + 's';
-            bubble.style.animationDelay = Math.random() * 5 + 's';
-            container.appendChild(bubble);
-        }
-
-        // --- 核心配置：请修改下方两行内容 ---
-        
-        const username = 'gfjrjue';  // <--- 比如 'zhangsan'
-        const repo = 'my-links';          // <--- 比如 'my-links'
+        // --- 请修改下方两个参数 ---
+        const username = 'gfjrjue'; 
+        const repo = 'my-links';
         const path = 'index.html';
 
-        // --- 自动获取更新时间的逻辑 ---
         async function getLastUpdate() {
             try {
                 const response = await fetch(`https://api.github.com/repos/${username}/${repo}/commits?path=${path}&page=1&per_page=1`);
                 const data = await response.json();
                 if (data && data[0]) {
                     const date = new Date(data[0].commit.committer.date);
-                    document.getElementById('last-update').textContent = '最后修改于：' + date.toLocaleString();
+                    document.getElementById('last-update').textContent = 'UPDATED: ' + date.toLocaleString();
                 }
-            } catch (e) { document.getElementById('last-update').textContent = '时间同步暂不可用'; }
+            } catch (e) { document.getElementById('last-update').textContent = 'SYNC FAILED'; }
         }
         getLastUpdate();
     </script>
 </body>
 </html>
-
